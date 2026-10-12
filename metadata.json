@@ -1,0 +1,6 @@
+{
+  "name": "Manikanta Naturals",
+  "description": "Production multi-app ecosystem for Manikanta Naturals: Customer App, Business Owner Admin, and Developer Super Admin with shared Firestore backend.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

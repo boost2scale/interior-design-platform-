@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Architectural Diamond & Modern Villa Facade Emblem -->
+    <path
+        android:fillColor="#C59B27"
+        android:pathData="M54,22 L84,40 L84,76 L54,94 L24,76 L24,40 Z"/>
+    <path
+        android:fillColor="#1E1B18"
+        android:pathData="M54,28 L78,43 L78,73 L54,88 L30,73 L30,43 Z"/>
+    <!-- Interior Geometry Lines (Architectural Floor Plan & Perspective) -->
+    <path
+        android:strokeColor="#C59B27"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M54,28 L54,88 M30,43 L78,73 M30,73 L78,43"/>
+    <path
+        android:fillColor="#DFBA50"
+        android:pathData="M54,46 L64,54 L54,62 L44,54 Z"/>
+</vector>

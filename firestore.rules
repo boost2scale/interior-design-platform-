@@ -1,0 +1,87 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'super_admin' ||
+        request.auth.token.email.matches('.*admin.*') ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin')
+      );
+    }
+
+    function isOwner() {
+      return isAuthenticated() && (
+        isSuperAdmin() ||
+        request.auth.token.role == 'owner' ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['owner', 'business_owner'])
+      );
+    }
+
+    // Products: public browse for published, owner can create/edit/archive
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update: if isOwner() && request.resource.data.availableStock >= 0;
+      allow delete: if false; // Archive rather than delete
+    }
+
+    // Categories: public read, owner edit
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    // Banners & Brand Profile
+    match /banners/{bannerId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    match /business_profile/{storeId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    // Orders: Customer can create and read own orders; Owner can read and update status
+    match /orders/{orderId} {
+      allow create: if isAuthenticated() && request.resource.data.customerId == request.auth.uid;
+      allow read: if isAuthenticated() && (isOwner() || resource.data.customerId == request.auth.uid);
+      allow update: if isOwner() || (isAuthenticated() && resource.data.customerId == request.auth.uid && request.resource.data.orderStatus == 'CANCELLED');
+      allow delete: if false;
+    }
+
+    // Inventory Logs: Read by owner, created during stock adjustments
+    match /inventory_logs/{logId} {
+      allow read: if isOwner();
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+
+    // Customer Care
+    match /customer_care/{ticketId} {
+      allow create: if isAuthenticated();
+      allow read: if isAuthenticated() && (isOwner() || resource.data.customerId == request.auth.uid);
+      allow update: if isOwner();
+      allow delete: if isSuperAdmin();
+    }
+
+    // Users
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && (request.auth.uid == userId || isSuperAdmin());
+    }
+
+    // Audit logs
+    match /audit_logs/{logId} {
+      allow read: if isSuperAdmin() || isOwner();
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+  }
+}

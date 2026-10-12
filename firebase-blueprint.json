@@ -1,0 +1,96 @@
+{
+  "entities": {
+    "products": {
+      "path": "/products/{productId}",
+      "fields": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "categoryName": { "type": "string" },
+        "sku": { "type": "string" },
+        "price": { "type": "number" },
+        "offerPrice": { "type": "number" },
+        "availableStock": { "type": "number" },
+        "unit": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "status": { "type": "string" },
+        "isFeatured": { "type": "boolean" },
+        "isNewArrival": { "type": "boolean" },
+        "storeId": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      }
+    },
+    "categories": {
+      "path": "/categories/{categoryId}",
+      "fields": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "sortOrder": { "type": "number" },
+        "active": { "type": "boolean" }
+      }
+    },
+    "orders": {
+      "path": "/orders/{orderId}",
+      "fields": {
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "shippingAddress": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "orderStatus": { "type": "string" },
+        "paymentStatus": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      }
+    },
+    "inventory_logs": {
+      "path": "/inventory_logs/{logId}",
+      "fields": {
+        "productId": { "type": "string" },
+        "previousStock": { "type": "number" },
+        "newStock": { "type": "number" },
+        "quantityDelta": { "type": "number" },
+        "reason": { "type": "string" },
+        "actorId": { "type": "string" },
+        "timestamp": { "type": "timestamp" }
+      }
+    },
+    "banners": {
+      "path": "/banners/{bannerId}",
+      "fields": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "active": { "type": "boolean" }
+      }
+    },
+    "business_profile": {
+      "path": "/business_profile/{storeId}",
+      "fields": {
+        "storeName": { "type": "string" },
+        "tagline": { "type": "string" },
+        "founderName": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" }
+      }
+    },
+    "users": {
+      "path": "/users/{userId}",
+      "fields": {
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      }
+    },
+    "audit_logs": {
+      "path": "/audit_logs/{logId}",
+      "fields": {
+        "actorId": { "type": "string" },
+        "action": { "type": "string" },
+        "timestamp": { "type": "timestamp" }
+      }
+    }
+  }
+}

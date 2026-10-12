@@ -1,0 +1,8 @@
+{
+  "firestore": [
+    {
+      "database": "ai-studio-android-interior-359f2cc1-dfb0-4229-bdf4-511856a806b4",
+      "rules": "firestore.rules"
+    }
+  ]
+}
